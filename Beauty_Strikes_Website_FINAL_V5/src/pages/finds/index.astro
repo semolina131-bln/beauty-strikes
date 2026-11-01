@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import DisclosureNote from '../../components/DisclosureNote.astro';
+import { getProducts, getCategories, CATEGORY_SHORT } from '../../lib/content';
+
+const products = await getProducts();
+const categories = await getCategories();
+const brands = [...new Set(products.map((p) => p.data.brand))].filter((b) => !b.startsWith('[')).sort();
+---
+<BaseLayout
+  title="Beauty Strikes Beauty Finds — Curated Skincare, Haircare & Tools"
+  description="A curated, clearly disclosed directory of skincare, K-beauty, haircare and beauty tools. Filter by category or brand, search by ingredient or product type."
+>
+  <section class="head">
+    <div class="wrap">
+      <Breadcrumbs items={[{ label: 'Beauty Finds' }]} />
+      <span class="eyebrow">The shortlist</span>
+      <h1>Beauty Strikes Beauty Finds</h1>
+      <p class="lede">Explore our curated beauty picks. Each published entry explains the product clearly, including important considerations.</p>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <DisclosureNote />
+
+      <form class="filters" role="search" aria-label="Filter products" onsubmit="return false">
+        <div class="field search">
+          <label for="q">Search</label>
+          <input id="q" type="search" placeholder="e.g. cleanser, niacinamide, COSRX" autocomplete="off" />
+        </div>
+        <fieldset class="field cats">
+          <legend>Category</legend>
+          <div class="chips">
+            <button type="button" class="chip" data-cat="all" aria-pressed="true">All</button>
+            {categories.map((c) => <button type="button" class="chip" data-cat={c.id} aria-pressed="false">{CATEGORY_SHORT[c.id]}</button>)}
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="brand">Brand</label>
+          <select id="brand">
+            <option value="all">All brands</option>
+            {brands.map((b) => <option value={b}>{b}</option>)}
+          </select>
+        </div>
+      </form>
+
+      <p class="count" id="count" role="status" aria-live="polite">{products.length} products</p>
+
+      {products.length === 0 && <p class="notice">Our first Beauty Strikes beauty edit is being prepared. Explore the category guides while we verify the products.</p>}
+      <div class="grid grid-4" id="grid">
+        {products.map((p) => <ProductCard product={p} />)}
+      </div>
+      <p class="none" id="none" hidden>No products match. Try another search term or clear the filters.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const q = document.getElementById('q') as HTMLInputElement;
+  const brand = document.getElementById('brand') as HTMLSelectElement;
+  const chips = [...document.querySelectorAll<HTMLButtonElement>('.chip[data-cat]')];
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-product]')];
+  const count = document.getElementById('count')!;
+  const none = document.getElementById('none')!;
+  let cat = 'all';
+
+  // Allow deep links like /finds/?cat=beauty-tools
+  const params = new URLSearchParams(location.search);
+  if (params.get('cat')) cat = params.get('cat')!;
+  if (params.get('q')) q.value = params.get('q')!;
+
+  function apply() {
+    const term = q.value.trim().toLowerCase();
+    let n = 0;
+    for (const el of cards) {
+      const ok =
+        (cat === 'all' || el.dataset.category === cat) &&
+        (brand.value === 'all' || el.dataset.brand === brand.value) &&
+        (!term || (el.dataset.search ?? '').includes(term));
+      el.hidden = !ok;
+      if (ok) { n++; el.classList.add('is-in'); }
+    }
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.cat === cat)));
+    count.textContent = `${n} product${n === 1 ? '' : 's'}`;
+    none.hidden = n > 0;
+  }
+  chips.forEach((c) => c.addEventListener('click', () => { cat = c.dataset.cat!; apply(); }));
+  q.addEventListener('input', apply);
+  brand.addEventListener('change', apply);
+  apply();
+</script>
+
+<style>
+  .head { padding: clamp(36px, 6vw, 72px) 0 8px; background: linear-gradient(172deg, transparent 86%, var(--wash) 86%); border-bottom: 1px solid var(--line); }
+  .head h1 { margin: 14px 0 16px; }
+  .filters { display: grid; grid-template-columns: 1.2fr 2fr .9fr; gap: 18px 24px; align-items: end; margin: 28px 0 10px;
+    padding: 22px; background: var(--surface); border: 1.5px solid var(--midnight); }
+  .field { display: grid; gap: 8px; border: 0; padding: 0; margin: 0; min-width: 0; }
+  label, legend { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); padding: 0; }
+  input, select { width: 100%; min-height: 44px; padding: 10px 14px; border: 1px solid var(--line-strong);
+    font: inherit; font-size: .95rem; color: var(--ink); background: var(--bg); }
+  input:focus, select:focus { outline: 3px solid var(--lavender); border-color: var(--violet); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { min-height: 40px; padding: 8px 14px; border: 1.5px solid var(--midnight); background: var(--surface);
+    font: 750 .7rem var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--midnight); cursor: pointer; }
+  .chip[aria-pressed='true'] { background: var(--midnight); color: #fff; }
+  .chip:hover { background: var(--lavender-soft); }
+  .chip[aria-pressed='true']:hover { background: var(--violet); }
+  .count { font-size: .88rem; color: var(--ink-3); margin: 18px 0 16px; }
+  .none { color: var(--ink-2); padding: 30px 0; }
+  [hidden] { display: none !important; }
+  /* Without JavaScript the filters can't work, so we hide them and show everything. */
+  :global(html:not(.js)) .filters { display: none; }
+  @media (max-width: 900px) { .filters { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,42 @@
+---
+import ProductArt from './ProductArt.astro';
+import AffiliateButton from './AffiliateButton.astro';
+import { CATEGORY_SHORT, type Product } from '../lib/content';
+interface Props { product: Product }
+const { product } = Astro.props;
+const d = product.data;
+const searchText = [d.name, d.brand, d.summary, ...d.features, CATEGORY_SHORT[d.category]].join(' ').toLowerCase();
+---
+<article class="card reveal" data-product data-category={d.category} data-brand={d.brand} data-search={searchText}>
+  <a class="media" href={`/finds/${product.id}/`} tabindex="-1" aria-hidden="true">
+    <ProductArt category={d.category} subcategory={d.subcategory} image={d.image} />
+  </a>
+  <div class="body">
+    <div class="meta">
+      <span class="cat">{CATEGORY_SHORT[d.category]}</span>
+      {d.status === 'placeholder' && <span class="badge badge-placeholder">Placeholder</span>}
+    </div>
+    <h3><a href={`/finds/${product.id}/`}><span class="brand">{d.brand}</span> {d.name}</a></h3>
+    <p class="summary">{d.summary}</p>
+    <div class="cta"><AffiliateButton product={product} full /></div>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative; display: flex; flex-direction: column; background: var(--surface);
+    border: 1px solid var(--line); transition: border-color .25s;
+  }
+  .card:hover { border-color: var(--midnight); }
+  .media { display: block; }
+  .body { display: flex; flex-direction: column; gap: 12px; padding: 22px 24px 24px; flex: 1; }
+  .meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .cat { white-space: nowrap; font-size: .66rem; font-weight: 750; letter-spacing: .18em; text-transform: uppercase; color: var(--violet); }
+  h3 { font-size: 1.25rem; line-height: 1.2; margin: 0; }
+  .cta { margin-top: 10px; }
+  h3 a { color: var(--plum); text-decoration: none; }
+  h3 a:hover { color: var(--violet); }
+  .brand { display: block; font-family: var(--font-body); font-size: .8rem; font-weight: 650; letter-spacing: .04em; color: var(--ink-3); margin-bottom: 6px; }
+  .summary { font-size: .92rem; color: var(--ink-2); margin: 0 0 auto;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+</style>

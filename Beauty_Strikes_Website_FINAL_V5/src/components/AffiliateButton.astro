@@ -1,0 +1,39 @@
+---
+/**
+ * Renders an Amazon affiliate link ONLY when:
+ *  - AFFILIATE.amazonAssociate is true (src/config.ts),
+ *  - the product status is "live",
+ *  - affiliateUrl is an amazon.com / amzn.to URL.
+ * Otherwise a clearly disabled, non-clickable state is shown.
+ * Every active link carries the link-level "Paid link" label.
+ */
+import { AFFILIATE } from '../config';
+import { isAffiliateActive, type Product } from '../lib/content';
+interface Props { product: Product; full?: boolean }
+const { product, full = false } = Astro.props;
+const active = isAffiliateActive(product);
+const reason =
+  product.data.status === 'placeholder' ? 'Link coming soon'
+  : product.data.status === 'unavailable' ? 'Currently unavailable'
+  : 'Link coming soon';
+---
+<div class:list={['aff', { full }]}>
+  {active ? (
+    <>
+      <a class="btn btn-primary" href={product.data.affiliateUrl} target="_blank" rel="sponsored nofollow noopener">
+        View on Amazon<span class="visually-hidden"> (opens in a new tab)</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+      <span class="paid">{AFFILIATE.linkLabel}</span>
+    </>
+  ) : (
+    <span class="btn" aria-disabled="true" role="note">{reason}</span>
+  )}
+</div>
+
+<style>
+  .aff { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .full .btn { width: 100%; }
+  .btn { font-size: .86rem; min-height: 42px; padding: 10px 16px; }
+  .paid { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); border: 1px solid var(--line-strong); padding: 3px 8px; border-radius: 6px; }
+</style>

@@ -1,0 +1,129 @@
+---
+import { render, getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import DisclosureNote from '../../components/DisclosureNote.astro';
+import { getArticles, CATEGORY_SHORT, TEMPLATE_LABELS, formatDate, readingMinutes, type Article } from '../../lib/content';
+import { SITE } from '../../config';
+
+export async function getStaticPaths() {
+  const articles = await getArticles();
+  return articles.map((article) => ({ params: { slug: article.id }, props: { article } }));
+}
+const { article } = Astro.props as { article: Article };
+const d = article.data;
+const { Content, headings } = await render(article);
+const toc = headings.filter((h) => h.depth === 2);
+const allProducts = await getCollection('products');
+const products = d.relatedProducts.map((id) => allProducts.find((p) => p.id === id)).filter((p) => !!p);
+const related = (await getArticles()).filter((a) => a.id !== article.id && a.data.category === d.category).slice(0, 3);
+const fallbackRelated = related.length ? related : (await getArticles()).filter((a) => a.id !== article.id).slice(0, 3);
+const url = new URL(`/journal/${article.id}/`, Astro.site).href;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: d.title,
+    description: d.description,
+    datePublished: d.pubDate.toISOString(),
+    dateModified: (d.updatedDate ?? d.pubDate).toISOString(),
+    mainEntityOfPage: url,
+    image: new URL(d.heroImage ?? '/images/brand/og-default.jpg', Astro.site).href,
+    author: { '@type': 'Organization', name: SITE.name },
+    publisher: { '@type': 'Organization', name: SITE.name, logo: { '@type': 'ImageObject', url: new URL('/images/brand/logo-mark-512.webp', Astro.site).href } },
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: Astro.site?.href },
+      { '@type': 'ListItem', position: 2, name: 'Journal', item: new URL('/journal/', Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: d.title, item: url },
+    ],
+  },
+];
+---
+<BaseLayout
+  title={d.title}
+  description={d.description}
+  type="article"
+  image={d.heroImage}
+  imageAlt={d.heroAlt}
+  pinImage={d.pinImage}
+  published={d.pubDate}
+  modified={d.updatedDate}
+  jsonLd={jsonLd}
+>
+  <article>
+    <header class="a-head">
+      <div class="wrap-narrow">
+        <Breadcrumbs items={[{ label: 'Journal', href: '/journal/' }, { label: CATEGORY_SHORT[d.category], href: `/journal/category/${d.category}/` }, { label: d.title }]} />
+        <div class="tags">
+          <span class="badge">{TEMPLATE_LABELS[d.template]}</span>
+          <a href={`/${d.category}/`}>{CATEGORY_SHORT[d.category]}</a>
+        </div>
+        <h1>{d.title}</h1>
+        <p class="lede">{d.description}</p>
+        <p class="meta">
+          By the {SITE.name} editors · Published <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate)}</time>
+          {d.updatedDate && <> · Updated <time datetime={d.updatedDate.toISOString()}>{formatDate(d.updatedDate)}</time></>}{' '}
+          · {readingMinutes(article.body)} min read
+        </p>
+      </div>
+    </header>
+
+    {d.heroImage && (
+      <div class="wrap hero-img"><img src={d.heroImage} alt={d.heroAlt ?? ''} width="1200" height="630" /></div>
+    )}
+
+    <div class="wrap-narrow body">
+      {products.length > 0 && <DisclosureNote />}
+      {toc.length > 2 && (
+        <nav class="toc" aria-label="In this guide">
+          <p>In this guide</p>
+          <ol>{toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+        </nav>
+      )}
+      <div class="prose">
+        <Content />
+      </div>
+      <p class="medical">This guide is general information, not medical advice. If you have a skin condition, are pregnant, or a product causes persistent irritation, talk to a dermatologist or doctor.</p>
+    </div>
+  </article>
+
+  {products.length > 0 && (
+    <section class="section-tight">
+      <div class="wrap">
+        <h2 class="h">Products mentioned</h2>
+        <div class="grid grid-4">{products.map((p) => <ProductCard product={p!} />)}</div>
+      </div>
+    </section>
+  )}
+
+  {fallbackRelated.length > 0 && (
+    <section class="section section-wash">
+      <div class="wrap">
+        <h2 class="h">Keep reading</h2>
+        <div class="grid grid-3">{fallbackRelated.map((a) => <ArticleCard article={a} />)}</div>
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .a-head { padding: clamp(32px, 6vw, 68px) 0 8px; background: linear-gradient(172deg, transparent 86%, var(--wash) 86%); border-bottom: 1px solid var(--line); }
+  .tags { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .tags a { font-size: .74rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--violet); text-decoration: none; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); }
+  .meta { font-size: .86rem; color: var(--ink-3); margin: 18px 0 28px; }
+  .hero-img img { width: 100%; margin-bottom: 24px; }
+  .body { padding-block: 28px 32px; }
+  .toc { margin: 28px 0 36px; padding: 20px 24px; background: var(--surface); border: 1px solid var(--line); }
+  .toc p { margin: 0 0 8px; font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+  .toc ol { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; font-size: .95rem; }
+  .medical { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--line); font-size: .86rem; color: var(--ink-3); }
+  .h { font-size: 1.8rem; margin-bottom: 24px; }
+  .prose :global(h2) { scroll-margin-top: 90px; }
+</style>

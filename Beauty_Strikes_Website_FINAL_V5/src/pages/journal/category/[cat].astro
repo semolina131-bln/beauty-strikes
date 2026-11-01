@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import JournalNav from '../../../components/JournalNav.astro';
+import { getArticles, getCategories, type Category } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const cats = await getCategories();
+  return cats.map((c) => ({ params: { cat: c.id }, props: { category: c } }));
+}
+const { category } = Astro.props as { category: Category };
+const articles = (await getArticles()).filter((a) => a.data.category === category.id);
+---
+<BaseLayout title={`${category.data.title} Guides — Beauty Journal`} description={`All Beauty Strikes guides about ${category.data.title.toLowerCase()}. ${category.data.description}`.slice(0, 158)} noindex={articles.length === 0}>
+  <section class="head">
+    <div class="wrap">
+      <Breadcrumbs items={[{ label: 'Journal', href: '/journal/' }, { label: category.data.title }]} />
+      <span class="eyebrow">Journal</span>
+      <h1>{category.data.title}</h1>
+      <JournalNav active={category.id} />
+    </div>
+  </section>
+  <section class="section-tight">
+    <div class="wrap">
+      {articles.length ? (
+        <div class="grid grid-3">{articles.map((a) => <ArticleCard article={a} />)}</div>
+      ) : (
+        <p class="muted">New guides in this section are in progress. Meanwhile, see <a href={`/${category.id}/`}>{category.data.title}</a>.</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .head { padding: clamp(36px, 6vw, 72px) 0 8px; background: linear-gradient(172deg, transparent 86%, var(--wash) 86%); border-bottom: 1px solid var(--line); }
+  .head h1 { margin: 14px 0 16px; }
+</style>

@@ -1,0 +1,15 @@
+---
+import { CATEGORY_SHORT } from '../lib/content';
+interface Props { active?: string }
+const { active = 'all' } = Astro.props;
+const items = [{ id: 'all', label: 'All guides', href: '/journal/' }, ...Object.entries(CATEGORY_SHORT).map(([id, label]) => ({ id, label, href: `/journal/category/${id}/` }))];
+---
+<nav class="jn" aria-label="Journal categories">
+  {items.map((i) => <a href={i.href} aria-current={i.id === active ? 'page' : undefined}>{i.label}</a>)}
+</nav>
+<style>
+  .jn { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  a { padding: 9px 14px; border: 1.5px solid var(--midnight); font-size: .7rem; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; color: var(--midnight); background: var(--surface); transition: background-color .2s, color .2s; }
+  a:hover { background: var(--lavender-soft); }
+  a[aria-current='page'] { background: var(--midnight); color: #fff; }
+</style>

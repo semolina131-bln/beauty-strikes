@@ -1,0 +1,43 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { SITE } from '../config';
+---
+<PageLayout
+  title="Privacy Policy (Draft)"
+  description="Draft privacy policy for Beauty Strikes: what data is processed when you visit, hosting, external links and your rights under the GDPR."
+  eyebrow="Privacy"
+  heading="Privacy Policy"
+  updated="DRAFT — not yet verified"
+>
+  <p class="notice"><strong>Draft template — not legal advice.</strong> This text reflects the technology actually used by this website as built (static hosting, no analytics, no cookies, self-hosted fonts). Every section marked <strong>[VERIFY]</strong> must be checked and completed — ideally by a qualified professional — before launch. Remove this box once verified.</p>
+
+  <h2>1. Controller</h2>
+  <p>The controller responsible for data processing on this website is named in our <a href={SITE.legalNoticeUrl} target="_blank" rel="noopener">Legal Notice / Impressum ↗</a>. <strong>[VERIFY]</strong> Name, address and contact email must appear either here or in the linked legal notice.</p>
+
+  <h2>2. What this website does not do</h2>
+  <ul>
+    <li>No user accounts, newsletter, comment function or contact form.</li>
+    <li>No analytics or tracking tools.</li>
+    <li>No advertising networks, social media plugins or embedded third-party content.</li>
+    <li>No cookies are set by this website. Fonts are hosted on our own server, not loaded from Google.</li>
+  </ul>
+  <p><strong>[VERIFY]</strong> If you later add analytics, embeds, a newsletter or similar tools, this policy and possibly a consent mechanism must be updated before they go live.</p>
+
+  <h2>3. Hosting and server logs</h2>
+  <p>This website is hosted by Cloudflare, Inc. (Cloudflare Pages). When you visit the site, technically necessary data is processed to deliver it securely — for example your IP address, date and time of access, the requested page, browser type and referrer. This processing is based on our legitimate interest in providing a secure, working website (Art. 6(1)(f) GDPR).</p>
+  <p><strong>[VERIFY]</strong> Check Cloudflare’s current data processing terms, storage periods, data transfer mechanism to the US (e.g. EU-US Data Privacy Framework / standard contractual clauses), and whether a data processing agreement applies to your account.</p>
+
+  <h2>4. Affiliate links and external websites</h2>
+  <p>Some pages may contain links to external websites, including Amazon.com. When you click such a link, you leave Beauty Strikes. Data processing on the external site is governed by that provider’s privacy policy. Affiliate links may contain an identifier so that the retailer can attribute a purchase to Beauty Strikes; this happens on the retailer’s side, not on this website.</p>
+  <p><strong>[VERIFY]</strong> Once affiliate links are active, check the Amazon Associates requirements and Amazon’s privacy notice, and describe the processing accurately.</p>
+
+  <h2>5. Legal notice hosted on Google Sites</h2>
+  <p>Our legal notice is published on Google Sites. If you open it, Google processes data under its own privacy policy. <strong>[VERIFY]</strong></p>
+
+  <h2>6. Your rights</h2>
+  <p>Under the GDPR you have the right to access, rectification, erasure, restriction of processing, data portability and to object to processing based on legitimate interests. You also have the right to lodge a complaint with a data protection supervisory authority.</p>
+  <p><strong>[VERIFY]</strong> Name the competent supervisory authority for your place of business, and check whether additional laws apply (for example US state privacy laws, depending on your audience and scale).</p>
+
+  <h2>7. Changes</h2>
+  <p>We will update this policy when the website’s technology or legal requirements change.</p>
+</PageLayout>

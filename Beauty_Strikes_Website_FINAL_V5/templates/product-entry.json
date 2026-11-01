@@ -1,0 +1,17 @@
+{
+  "id": "anua-heartleaf-77-toner",
+  "name": "Heartleaf 77% Soothing Toner",
+  "brand": "Anua",
+  "category": "korean-skincare",
+  "subcategory": "serums",
+  "summary": "Your own 1–3 sentence editorial summary.",
+  "features": ["Feature from the official listing", "Key ingredient", "Size / format"],
+  "pros": ["A strength you can support"],
+  "limitations": ["An honest limitation"],
+  "image": { "src": "/images/products/anua-toner.webp", "alt": "Anua toner bottle on a light background", "credit": "Photo: Beauty Strikes" },
+  "amazonUrl": "https://www.amazon.com/dp/XXXXXXXXXX",
+  "affiliateUrl": "https://www.amazon.com/dp/XXXXXXXXXX?tag=yourtag-20",
+  "status": "draft",
+  "featured": false,
+  "lastReviewed": "2026-11-01"
+}

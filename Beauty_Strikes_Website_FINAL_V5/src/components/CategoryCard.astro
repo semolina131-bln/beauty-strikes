@@ -1,0 +1,31 @@
+---
+import type { Category } from '../lib/content';
+interface Props { category: Category; index: number }
+const { category, index } = Astro.props;
+const d = category.data;
+const fg = 'var(--violet)';
+---
+<a class="ccard reveal" href={`/${category.id}/`} style={`--fg:${fg}`}>
+  <span class="num" aria-hidden="true">0{index + 1}</span>
+  <span class="kicker">{d.kicker}</span>
+  <h3>{d.title}</h3>
+  <p>{d.description}</p>
+  <span class="go">Explore <span aria-hidden="true">→</span></span>
+</a>
+<style>
+  .ccard { position: relative; display: grid; grid-template-rows: 75px 55px minmax(66px,auto) 1fr auto; gap: 12px; padding: 30px 28px 28px; min-height: 340px;
+    background: var(--surface); border: 1px solid var(--line); text-decoration: none; color: var(--ink); overflow: hidden;
+    transition: border-color .25s; }
+  .ccard::before { content: ''; position: absolute; inset: 0; background: var(--midnight);
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); transition: clip-path .45s var(--ease); }
+  .ccard:hover::before, .ccard:focus-visible::before { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  .ccard > * { position: relative; }
+  .num { font-family: var(--font-display); font-weight: 500; font-size: 3.4rem; line-height: 1; color: var(--fg); transition: color .3s; }
+  .kicker { font-size: .66rem; font-weight: 750; letter-spacing: .18em; text-transform: uppercase; color: var(--violet); margin-top: 0; align-self: end; transition: color .3s; }
+  h3 { margin: 0; font-weight: 700; font-size: 1.55rem; line-height: 1.15; transition: color .3s; }
+  p { margin: 0; font-size: .92rem; color: var(--ink-2); transition: color .3s; }
+  .go { font-weight: 750; font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--midnight); margin-top: 8px; transition: color .3s; }
+  .ccard:hover .num, .ccard:hover .kicker, .ccard:hover .go { color: var(--lavender); }
+  .ccard:hover h3 { color: #fff; }
+  .ccard:hover p { color: #d9d1ea; }
+</style>

@@ -1,0 +1,180 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import ProductCard from '../components/ProductCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import DisclosureNote from '../components/DisclosureNote.astro';
+import { getArticles, getCategories, getProducts } from '../lib/content';
+import { SITE } from '../config';
+
+const categories = await getCategories();
+const products = await getProducts();
+const featured = products.filter((p) => p.data.featured).slice(0, 4);
+const articles = await getArticles();
+const [lead, ...rest] = articles;
+
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: Astro.site?.href, description: SITE.description },
+  { '@context': 'https://schema.org', '@type': 'Organization', name: SITE.name, url: Astro.site?.href, logo: new URL('/images/brand/logo-mark-512.webp', Astro.site).href },
+];
+
+// "Start here" only links to pages that exist in this build.
+const starts = [
+  ...articles.slice(0, 3).map((a) => ({ label: a.data.title.split(':')[0], href: `/journal/${a.id}/`, note: a.data.description.split('.')[0] + '.' })),
+  { label: 'Korean skincare, decoded', href: '/korean-skincare/', note: 'Product types first, then the shortlist.' },
+  { label: 'The four-step routine', href: '/skincare-routines/', note: 'Everything else is optional.' },
+  { label: 'Just want the shortlist', href: '/finds/', note: products.length ? `${products.length} curated finds, filterable.` : 'Our beauty edit is in preparation.' },
+].slice(0, 4);
+
+---
+<BaseLayout title={`${SITE.name} — ${SITE.tagline}`} description={SITE.description} jsonLd={jsonLd}>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="sub">{SITE.subline}</p>
+        <h1><span class="l1">Bold Beauty.</span><span class="l3 serif-italic">No fluff.</span></h1>
+        <div class="hero-foot">
+          <p class="lede">{SITE.mission}</p>
+          <div class="cta">
+            <a class="btn btn-primary" href="/finds/">Browse the finds <span aria-hidden="true">→</span></a>
+            <a class="btn btn-ghost" href="/journal/">Read the guides</a>
+          </div>
+        </div>
+      </div>
+      <figure class="hero-visual" aria-hidden="true">
+        <img src="/images/brand/logo-mark-512.webp" alt="" width="512" height="512" fetchpriority="high" />
+        <figcaption>Est. 2026 · Independent</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="section">
+    <div class="wrap">
+      <div class="manifesto">
+        <h2 class="m-title">The rules<br /><span class="serif-italic hl">we write by.</span></h2>
+        <ol class="rules">
+          <li class="reveal"><span>01</span><div><h3>Explained, not oversold.</h3><p>We explain what products are designed to do, who they may suit and what to consider before buying.</p></div></li>
+          <li class="reveal"><span>02</span><div><h3>Evidence before adjectives.</h3><p>We separate what research supports from marketing — and say so when evidence is thin.</p></div></li>
+          <li class="reveal"><span>03</span><div><h3>Every link labeled.</h3><p>Affiliate links are always marked. No invented ratings, prices, tests or testimonials.</p></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="section-head">
+        <div><span class="eyebrow">Explore</span><h2>Four ways in.</h2></div>
+        <p>Start with the topic, not the product. Each section explains the product types first, then shows our shortlist.</p>
+      </div>
+      <div class="grid grid-4">
+        {categories.map((c, i) => <CategoryCard category={c} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED FINDS -->
+  <section class="section section-wash cut-both">
+    <div class="wrap">
+      <div class="section-head">
+        <div><span class="eyebrow">Sharp picks</span><h2>On the shortlist.</h2></div>
+        <a class="btn btn-ghost" href="/finds/">All {products.length} finds</a>
+      </div>
+      <DisclosureNote />
+      <div class="grid grid-4 products">
+        {featured.map((p) => <ProductCard product={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- GUIDES (only when published guides exist) -->
+  {lead && (
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div><span class="eyebrow">Smart routines</span><h2>Latest guides.</h2></div>
+          <a class="btn btn-ghost" href="/journal/">All guides</a>
+        </div>
+        <ArticleCard article={lead} large />
+        {rest.length > 0 && <div class="grid grid-3 more">{rest.slice(0, 3).map((a) => <ArticleCard article={a} />)}</div>}
+      </div>
+    </section>
+  )}
+
+  <!-- START HERE -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="starts">
+        <div class="starts-head">
+          <span class="eyebrow">Your rules</span>
+          <h2>Pick your <span class="serif-italic hl">starting point.</span></h2>
+        </div>
+        <ul>
+          {starts.map((s, i) => (
+            <li><a href={s.href}><span class="si">0{i + 1}</span><span class="sl">{s.label}</span><span class="sn">{s.note}</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .hero { position: relative; overflow: hidden; padding: clamp(56px, 8vw, 120px) 0 clamp(64px, 8vw, 120px); border-bottom: 1px solid var(--line); }
+  .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(240px, .65fr); gap: clamp(24px, 4vw, 56px); align-items: end; }
+  .sub { font-size: .78rem; font-weight: 750; letter-spacing: .26em; text-transform: uppercase; color: var(--violet); margin: 0 0 28px; }
+  h1 { font-size: clamp(2.85rem, 6vw + .5rem, 7rem); line-height: 1.15; letter-spacing: -.035em; font-weight: 700; margin: 0; }
+  h1 span { display: block; }
+  .l2 { padding-left: .55em; }
+  .l3 { color: var(--violet); font-weight: 700; letter-spacing: -0.02em; margin-top: .18em; }
+  @media (max-width: 640px) { .l3 { margin-top: .25em; } }
+  .hero-foot { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: end; margin-top: clamp(40px, 5vw, 64px); padding-top: 32px; border-top: 1.5px solid var(--midnight); }
+  .hero-foot .lede { margin: 0; max-width: 54ch; }
+  .cta { display: flex; flex-wrap: wrap; gap: 14px; }
+  .hero-visual { margin: 0 0 6px; position: relative; justify-self: end; width: 100%; max-width: 340px; padding: 14px; background: linear-gradient(150deg,#fff,#eee8f9); border: 1px solid var(--line-strong); box-shadow: 0 18px 45px rgba(23,11,46,.08); clip-path: polygon(0 0,92% 0,100% 8%,100% 100%,8% 100%,0 92%); }
+  .hero-visual img { width: 100%; clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 40px 100%, 0 calc(100% - 40px)); }
+  .hero-visual figcaption { margin-top: 12px; font-size: .66rem; font-weight: 750; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3); text-align: right; }
+
+  /* MANIFESTO */
+  .manifesto { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
+  .m-title { font-size: clamp(2.3rem, 3.4vw + 1rem, 4.2rem); line-height: 1.04; position: sticky; top: 110px; }
+  .rules { list-style: none; margin: 0; padding: 0; }
+  .rules li { display: grid; grid-template-columns: auto 1fr; gap: 28px; padding: 36px 0; border-top: 1.5px solid var(--midnight); }
+  .rules li:last-child { border-bottom: 1.5px solid var(--midnight); }
+  .rules span { font-family: var(--font-display); font-weight: 700; font-size: 2.2rem; line-height: 1; color: var(--violet); min-width: 1.6em; }
+  .rules h3 { font-size: clamp(1.5rem, 2.4vw, 2rem); margin-bottom: 10px; line-height: 1.15; }
+  .rules p { margin: 0; color: var(--ink-2); max-width: 52ch; }
+
+  .products { margin-top: 36px; }
+  .more { margin-top: 36px; }
+
+  /* START HERE */
+  .starts { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+  .starts h2 { margin-top: 14px; font-size: clamp(2.1rem, 2.8vw + 1rem, 3.5rem); line-height: 1.06; }
+  .starts ul { list-style: none; margin: 0; padding: 0; border-top: 1.5px solid var(--midnight); }
+  .starts li { border-bottom: 1px solid var(--line-strong); }
+  .starts a { display: grid; grid-template-columns: auto 1fr auto; grid-template-rows: auto auto; gap: 4px 24px; padding: 26px 4px; text-decoration: none; transition: background-color .2s, padding .25s var(--ease); }
+  .si { grid-row: 1 / 3; font-size: .7rem; font-weight: 750; letter-spacing: .16em; color: var(--violet); padding-top: 8px; }
+  .sl { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.3rem, 2vw, 1.6rem); color: var(--midnight); line-height: 1.15; }
+  .sn { grid-column: 2; color: var(--ink-3); font-size: .9rem; }
+  .arrow { grid-row: 1 / 3; grid-column: 3; align-self: center; color: var(--violet); font-size: 1.5rem; transition: transform .2s; }
+  .starts a:hover { background: var(--surface); padding-left: 14px; }
+  .starts a:hover .arrow { transform: translateX(6px); }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    @media (max-width: 640px) { .l3 { margin-top: .25em; } }
+  .hero-foot { grid-template-columns: 1fr; }
+    .manifesto, .starts { grid-template-columns: 1fr; }
+    .m-title { position: static; }
+  }
+</style>
+
+<style>
+.hero h1 .l1,.hero h1 .l3{display:block;padding:0;font-weight:700}.m-title,.section-head h2,.rules h3,.starts h2{font-weight:700}@media(max-width:650px){.hero h1{font-size:clamp(2.2rem,10vw,4rem);line-height:1.2}.hero h1 .l1{white-space:nowrap}}
+</style>

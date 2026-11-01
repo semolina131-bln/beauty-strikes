@@ -1,0 +1,22 @@
+---
+interface Props { size?: 'md' | 'lg' }
+const { size = 'md' } = Astro.props;
+---
+<a class:list={['logo', size]} href="/" aria-label="Beauty Strikes — home">
+  <img src="/images/brand/logo-mark-192.webp" alt="" width="44" height="44" />
+  <span class="word">
+    <span class="name">Beauty Strikes</span>
+    <span class="tag">Bold Beauty. No Fluff.</span>
+  </span>
+</a>
+
+<style>
+  .logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--plum); }
+  .logo img { width: 48px; height: 48px; padding: 3px; background: white; border: 1px solid var(--line-strong); box-shadow: 0 7px 19px rgba(23,11,46,.10); clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px)); }
+  .word { display: grid; line-height: 1; }
+  .name { font-family: var(--font-display); font-weight: 700; font-size: 1.30rem; letter-spacing: .06em; text-transform: uppercase; color: var(--midnight); }
+  .tag { font-family: var(--font-display); margin-top: 7px; font-size: .50rem; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; color: var(--ink-3); }
+  .lg img { width: 56px; height: 56px; }
+  .lg .name { font-size: 1.6rem; }
+  @media (max-width: 420px) { .tag { display: none; } }
+</style>

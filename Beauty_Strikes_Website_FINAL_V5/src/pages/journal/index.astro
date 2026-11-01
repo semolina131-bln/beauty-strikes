@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import JournalNav from '../../components/JournalNav.astro';
+import { getArticles } from '../../lib/content';
+const articles = await getArticles();
+---
+<BaseLayout noindex={articles.length === 0} title="Beauty Journal — Skincare Guides, Routines & Ingredient Explainers" description="Evidence-conscious beauty guides: Korean skincare routines, ingredient explainers, haircare and beauty-tool guides. No fake reviews, no hype.">
+  <section class="head">
+    <div class="wrap">
+      <Breadcrumbs items={[{ label: 'Journal' }]} />
+      <span class="eyebrow">Beauty Journal</span>
+      <h1>Guides worth <span class="serif-italic">your time.</span></h1>
+      <p class="lede">Routines, ingredient explainers and buying guides. We say what the evidence supports — and where it runs out.</p>
+      <JournalNav />
+    </div>
+  </section>
+  <section class="section-tight">
+    <div class="wrap">
+      {articles.length ? (
+        <div class="grid grid-3">{articles.map((a) => <ArticleCard article={a} />)}</div>
+      ) : (
+        <div class="empty">
+          <p class="e1">First guides in progress.</p>
+          <p class="muted">We publish a guide only after it has been reviewed and its sources checked. Meanwhile, explore <a href="/korean-skincare/">Korean Skincare</a>, <a href="/skincare-routines/">Routines</a> or the <a href="/finds/">Beauty Finds</a>.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .head { padding: clamp(36px, 6vw, 72px) 0 8px; background: linear-gradient(172deg, transparent 86%, var(--wash) 86%); border-bottom: 1px solid var(--line); }
+  .head h1 { margin: 14px 0 16px; }
+  .empty { border-top: 1.5px solid var(--midnight); padding-top: 28px; max-width: 60ch; }
+  .e1 { font-family: var(--font-display); font-weight: 600; font-size: 2rem; color: var(--midnight); margin-bottom: 8px; }
+</style>

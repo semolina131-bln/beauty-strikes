@@ -1,0 +1,63 @@
+---
+import Logo from './Logo.astro';
+import { SITE, AFFILIATE } from '../config';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="big" aria-hidden="true">Bold Beauty. <span class="serif-italic">No Fluff.</span></p>
+    <span class="strike" aria-hidden="true"></span>
+    <div class="cols">
+      <div class="brand">
+        <Logo size="lg" />
+        <p>An independent beauty editorial. We explain products and ingredients clearly and recommend carefully. We don't sell anything directly.</p>
+      </div>
+      <nav aria-label="Explore">
+        <h2>Explore</h2>
+        <ul>
+          <li><a href="/korean-skincare/">Korean Skincare</a></li>
+          <li><a href="/skincare-routines/">Routines & Treatments</a></li>
+          <li><a href="/haircare-scalp/">Haircare & Scalp</a></li>
+          <li><a href="/beauty-tools/">Beauty Tools</a></li>
+          <li><a href="/finds/">Beauty Finds</a></li>
+          <li><a href="/journal/">Journal</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="About and legal">
+        <h2>Beauty Strikes</h2>
+        <ul>
+          <li><a href="/about/">About & Editorial Standards</a></li>
+          <li><a href="/affiliate-disclosure/">Affiliate Disclosure</a></li>
+          <li><a href="/privacy/">Privacy Policy</a></li>
+          <li><a href={SITE.legalNoticeUrl} rel="noopener" target="_blank">Legal Notice / Impressum<span class="visually-hidden"> (opens in a new tab)</span> ↗</a></li>
+          {SITE.pinterestUrl && <li><a href={SITE.pinterestUrl} rel="noopener me" target="_blank">Pinterest ↗</a></li>}
+        </ul>
+      </nav>
+    </div>
+    <div class="fine">
+      <p>
+        {AFFILIATE.amazonAssociate
+          ? <><strong>{AFFILIATE.amazonStatement}</strong> Links labeled “{AFFILIATE.linkLabel}” are affiliate links.</>
+          : <>Affiliate links are not active yet. Once they are, every paid link will be clearly labeled. <a href="/affiliate-disclosure/">How we handle affiliate links</a>.</>}
+      </p>
+      <p>Content is for general information and is not medical advice. © {year} {SITE.name}.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--surface); border-top: 1.5px solid var(--midnight); padding: clamp(64px, 8vw, 104px) 0 40px; margin-top: 0; }
+  .big { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.4rem, 5.4vw + 1rem, 6.2rem); line-height: 1.02; letter-spacing: -0.02em; color: var(--midnight); margin: 0 0 36px; text-wrap: balance; }
+  .big span { color: var(--violet); font-weight: 500; }
+  .cols { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 48px; padding-top: 56px; }
+  .brand p { margin-top: 18px; max-width: 38ch; color: var(--ink-2); font-size: .95rem; }
+  h2 { font-family: var(--font-body); font-size: .68rem; font-weight: 750; letter-spacing: .22em; text-transform: uppercase; color: var(--violet); margin-bottom: 16px; }
+  ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  a { color: var(--midnight); text-decoration: none; font-size: .95rem; }
+  a:hover { color: var(--violet); text-decoration: underline; }
+  .fine { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line-strong); font-size: .84rem; color: var(--ink-3); }
+  .fine p { margin: 0 0 6px; }
+  .fine a { font-size: inherit; text-decoration: underline; }
+  .fine strong { color: var(--ink); }
+  @media (max-width: 800px) { .cols { grid-template-columns: 1fr; gap: 32px; } }
+</style>

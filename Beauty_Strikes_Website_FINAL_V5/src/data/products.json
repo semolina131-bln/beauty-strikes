@@ -1,0 +1,424 @@
+[
+  {
+    "id": "placeholder-anua-cleansing-oil",
+    "name": "Cleansing Oil — placeholder slot",
+    "brand": "Anua",
+    "category": "korean-skincare",
+    "subcategory": "cleansers",
+    "summary": "PLACEHOLDER. Replace with your own editorial summary once you have verified the exact product and its Amazon.com listing.",
+    "features": [
+      "[Verify] Product type: oil cleanser",
+      "[Add] Key ingredients from the official ingredient list",
+      "[Add] Skin types it is formulated for"
+    ],
+    "pros": [
+      "[Add] A strength you can support with the listing or brand information"
+    ],
+    "limitations": [
+      "[Add] An honest limitation, e.g. fragrance, texture, price tier"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": true,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-anua-heartleaf-toner",
+    "name": "Heartleaf Toner — placeholder slot",
+    "brand": "Anua",
+    "category": "korean-skincare",
+    "subcategory": "serums",
+    "summary": "PLACEHOLDER. Replace with your verified summary.",
+    "features": [
+      "[Verify] Product type: toner",
+      "[Add] Key ingredients",
+      "[Add] Size / format"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": false,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-medicube-serum",
+    "name": "Serum — placeholder slot",
+    "brand": "Medicube",
+    "category": "korean-skincare",
+    "subcategory": "serums",
+    "summary": "PLACEHOLDER. Replace with your verified summary.",
+    "features": [
+      "[Verify] Product type",
+      "[Add] Key ingredients"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": true,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-cosrx-cleanser",
+    "name": "Low-pH Cleanser — placeholder slot",
+    "brand": "COSRX",
+    "category": "korean-skincare",
+    "subcategory": "cleansers",
+    "summary": "PLACEHOLDER. Replace with your verified summary.",
+    "features": [
+      "[Verify] Product type: gel cleanser",
+      "[Add] Key ingredients"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": false,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-cosrx-moisturizer",
+    "name": "Moisturizer — placeholder slot",
+    "brand": "COSRX",
+    "category": "korean-skincare",
+    "subcategory": "moisturizers",
+    "summary": "PLACEHOLDER. Replace with your verified summary.",
+    "features": [
+      "[Verify] Product type",
+      "[Add] Key ingredients"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": true,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-dr-althea-cream",
+    "name": "Barrier Cream — placeholder slot",
+    "brand": "Dr. Althea",
+    "category": "korean-skincare",
+    "subcategory": "moisturizers",
+    "summary": "PLACEHOLDER. Replace with your verified summary.",
+    "features": [
+      "[Verify] Product type",
+      "[Add] Key ingredients"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": false,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-korean-sunscreen",
+    "name": "Sunscreen — placeholder slot",
+    "brand": "[Brand]",
+    "category": "korean-skincare",
+    "subcategory": "spf",
+    "summary": "PLACEHOLDER. Replace with your verified summary.",
+    "features": [
+      "[Verify] SPF and broad-spectrum claim on the US label",
+      "[Verify] US Drug Facts label present"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": false,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-the-ordinary-niacinamide",
+    "name": "Niacinamide Serum — placeholder slot",
+    "brand": "The Ordinary",
+    "category": "skincare-routines",
+    "subcategory": "ingredients",
+    "summary": "PLACEHOLDER. Replace with your verified summary. Related guide: Niacinamide, explained.",
+    "features": [
+      "[Verify] Niacinamide concentration as stated on the label",
+      "[Add] Other actives"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": true,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-the-ordinary-hydrating-serum",
+    "name": "Hydrating Serum — placeholder slot",
+    "brand": "The Ordinary",
+    "category": "skincare-routines",
+    "subcategory": "routines",
+    "summary": "PLACEHOLDER. Replace with your verified summary.",
+    "features": [
+      "[Verify] Product type",
+      "[Add] Key ingredients"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": false,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-hair-oil",
+    "name": "Hair Oil — placeholder slot",
+    "brand": "[Brand]",
+    "category": "haircare-scalp",
+    "subcategory": "hair-oils",
+    "summary": "PLACEHOLDER. Replace with your verified summary.",
+    "features": [
+      "[Add] Oils / key ingredients",
+      "[Add] Hair types"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": false,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-hair-serum",
+    "name": "Hair Serum — placeholder slot",
+    "brand": "[Brand]",
+    "category": "haircare-scalp",
+    "subcategory": "hair-serums",
+    "summary": "PLACEHOLDER. Replace with your verified summary.",
+    "features": [
+      "[Add] Key ingredients",
+      "[Add] Hair types"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": false,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-scalp-treatment",
+    "name": "Scalp Treatment — placeholder slot",
+    "brand": "[Brand]",
+    "category": "haircare-scalp",
+    "subcategory": "scalp-treatments",
+    "summary": "PLACEHOLDER. Replace with your verified summary.",
+    "features": [
+      "[Add] Active ingredients",
+      "[Add] How often to use (per brand directions)"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": false,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-medicube-device",
+    "name": "Facial Device — placeholder slot",
+    "brand": "Medicube",
+    "category": "beauty-tools",
+    "subcategory": "facial-devices",
+    "summary": "PLACEHOLDER. Replace with your verified summary. Include the safety notes from the manufacturer.",
+    "features": [
+      "[Verify] Technology / modes",
+      "[Verify] Regulatory status for the US market, if stated by the manufacturer"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": true,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-led-mask",
+    "name": "LED Mask — placeholder slot",
+    "brand": "[Brand]",
+    "category": "beauty-tools",
+    "subcategory": "led",
+    "summary": "PLACEHOLDER. Replace with your verified summary. Related guide: LED masks — safety first.",
+    "features": [
+      "[Verify] Wavelengths stated by the manufacturer",
+      "[Verify] Eye-protection guidance"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": false,
+    "lastReviewed": "2026-11-01"
+  },
+  {
+    "id": "placeholder-scalp-massager",
+    "name": "Scalp Massager — placeholder slot",
+    "brand": "[Brand]",
+    "category": "beauty-tools",
+    "subcategory": "massage-tools",
+    "summary": "PLACEHOLDER. Replace with your verified summary.",
+    "features": [
+      "[Add] Material",
+      "[Add] Wet/dry use"
+    ],
+    "pros": [
+      "[Add]"
+    ],
+    "limitations": [
+      "[Add]"
+    ],
+    "image": {
+      "src": "",
+      "alt": "",
+      "credit": ""
+    },
+    "amazonUrl": "",
+    "affiliateUrl": "",
+    "status": "placeholder",
+    "featured": false,
+    "lastReviewed": "2026-11-01"
+  }
+]

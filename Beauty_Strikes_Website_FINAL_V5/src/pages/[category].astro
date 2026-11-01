@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ProductCard from '../components/ProductCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import DisclosureNote from '../components/DisclosureNote.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import { getArticles, getCategories, getProducts, type Category } from '../lib/content';
+
+export async function getStaticPaths() {
+  const cats = await getCategories();
+  return cats.map((category) => ({ params: { category: category.id }, props: { category } }));
+}
+
+const { category } = Astro.props as { category: Category };
+const d = category.data;
+const products = (await getProducts()).filter((p) => p.data.category === category.id);
+const articles = (await getArticles()).filter((a) => a.data.category === category.id);
+const bySection = (id: string) => products.filter((p) => p.data.subcategory === id);
+const unsectioned = products.filter((p) => !d.sections.some((s) => s.id === p.data.subcategory));
+
+const jsonLd = [{
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: Astro.site?.href },
+    { '@type': 'ListItem', position: 2, name: d.title, item: new URL(`/${category.id}/`, Astro.site).href },
+  ],
+}];
+
+const concerns = [
+  ['Dryness / tightness', 'Gentle cleanser, humectant serum (e.g. hyaluronic acid, glycerin), richer moisturizer with ceramides', 'Persistent cracking, eczema-like patches'],
+  ['Oiliness / shine', 'Gel cleanser, niacinamide, lightweight gel moisturizer, non-greasy sunscreen', 'Sudden severe acne or cysts'],
+  ['Dullness / uneven tone', 'Daily sunscreen first; then niacinamide, vitamin C or gentle exfoliating acids', 'New or changing dark spots or moles'],
+  ['Sensitivity / redness', 'Fewer products, fragrance-free formulas, soothing ingredients such as centella', 'Persistent redness, burning or flushing'],
+];
+
+const toolChecks = [
+  'Read the manufacturer’s contraindications before first use — and follow them.',
+  'For LED devices: check the stated wavelengths and whether eye protection is required.',
+  'For the US market, check whether the manufacturer states FDA clearance for the specific device, and for what use.',
+  'Ask a doctor first if you are pregnant, have a skin condition, take photosensitizing medication or have a history of light sensitivity or seizures.',
+  'Expect gradual, modest results. Be wary of “instant” or “clinical-grade” claims without sources.',
+];
+---
+<BaseLayout title={d.metaTitle} description={d.description} jsonLd={jsonLd}>
+  <section class="cat-hero">
+    <div class="wrap">
+      <Breadcrumbs items={[{ label: d.title }]} />
+      <span class="eyebrow">{d.kicker}</span>
+      <h1>{d.title}</h1>
+      <p class="lede">{d.intro}</p>
+      <nav class="jump" aria-label="On this page">
+        {d.sections.map((s) => <a href={`#${s.id}`}>{s.title}</a>)}
+        {articles.length > 0 && <a href="#guides">Guides</a>}
+      </nav>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <DisclosureNote />
+  </div>
+
+  {category.id === 'skincare-routines' && (
+    <section class="section-tight">
+      <div class="wrap">
+        <div class="routine reveal">
+          <div>
+            <span class="eyebrow">The baseline</span>
+            <h2>The four-step routine.</h2>
+            <p class="muted">Everything else is optional. Start here, add one product at a time, and give each change a few weeks.</p>
+          </div>
+          <ol>
+            <li><strong>Cleanse.</strong> Gentle, non-stripping.</li>
+            <li><strong>Treat.</strong> One targeted serum, if you need one.</li>
+            <li><strong>Moisturize.</strong> Texture to match your skin.</li>
+            <li><strong>Protect.</strong> Broad-spectrum SPF every morning.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {d.sections.map((s) => {
+    const items = bySection(s.id);
+    return (
+      <section class="section-tight block" id={s.id}>
+        <div class="wrap">
+          <div class="block-head">
+            <h2>{s.title}</h2>
+            <p>{s.text}</p>
+          </div>
+          {s.id === 'concerns' && (
+            <div class="concerns reveal" role="region" aria-label="Skin concerns" tabindex="0">
+              <table>
+                <thead><tr><th scope="col">Concern</th><th scope="col">Product categories to consider</th><th scope="col">See a dermatologist if…</th></tr></thead>
+                <tbody>{concerns.map(([c, p, s2]) => <tr><th scope="row">{c}</th><td>{p}</td><td>{s2}</td></tr>)}</tbody>
+              </table>
+            </div>
+          )}
+          {items.length > 0 ? (
+            <div class="grid grid-4">{items.map((p) => <ProductCard product={p} />)}</div>
+          ) : s.id !== 'concerns' && (
+            <p class="empty">Our shortlist for this section is being prepared.</p>
+          )}
+        </div>
+      </section>
+    );
+  })}
+
+  {unsectioned.length > 0 && (
+    <section class="section-tight"><div class="wrap"><div class="grid grid-4">{unsectioned.map((p) => <ProductCard product={p} />)}</div></div></section>
+  )}
+
+  {category.id === 'beauty-tools' && (
+    <section class="section-tight">
+      <div class="wrap">
+        <div class="safety reveal">
+          <span class="eyebrow">Before you buy a device</span>
+          <h2>Safety checklist.</h2>
+          <ul>{toolChecks.map((t) => <li>{t}</li>)}</ul>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {products.length > 1 && (
+    <section class="section-tight">
+      <div class="wrap">
+        <ComparisonTable products={products} caption={`${d.title}: shortlist at a glance`} />
+      </div>
+    </section>
+  )}
+
+  {articles.length > 0 && (
+    <section class="section section-wash" id="guides">
+      <div class="wrap">
+        <div class="section-head"><div><span class="eyebrow">Guides</span><h2>Read before you buy.</h2></div></div>
+        <div class="grid grid-3">{articles.map((a) => <ArticleCard article={a} />)}</div>
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .cat-hero { padding: clamp(48px, 7vw, 96px) 0 clamp(40px, 5vw, 64px);
+    background: linear-gradient(172deg, transparent 86%, var(--wash) 86%); border-bottom: 1px solid var(--line); }
+  .cat-hero h1 { margin: 18px 0 22px; max-width: 16ch; }
+  .jump { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+  .jump a { padding: 9px 14px; border: 1.5px solid var(--midnight); font-size: .7rem; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; color: var(--midnight); background: var(--surface); transition: background-color .2s, color .2s; }
+  .jump a:hover { background: var(--midnight); color: #fff; }
+  .block { scroll-margin-top: 90px; }
+  .block + .block { border-top: 1px solid var(--line); }
+  .block-head { display: grid; grid-template-columns: minmax(200px, .5fr) 1fr; gap: 12px 40px; margin-bottom: 36px; align-items: baseline; }
+  .block-head h2 { margin: 0; font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
+  .block-head p { margin: 0; color: var(--ink-2); max-width: 62ch; }
+  .empty { color: var(--ink-3); font-style: italic; margin: 0; }
+  .routine { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; background: var(--surface); border: 1.5px solid var(--midnight); padding: clamp(28px, 4vw, 52px); }
+  .routine ol { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 12px; }
+  .routine li { counter-increment: s; display: flex; gap: 14px; align-items: baseline; padding: 12px 16px; background: var(--wash); border-left: 3px solid var(--violet); color: var(--ink-2); }
+  .routine li::before { content: counter(s); font-family: var(--font-display); font-size: 1.4rem; color: var(--violet); }
+  .routine strong { color: var(--plum); }
+  .concerns { overflow-x: auto; margin-bottom: 26px; border: 1px solid var(--line); background: var(--surface); }
+  .concerns table { width: 100%; min-width: 680px; border-collapse: collapse; font-size: .92rem; }
+  .concerns th, .concerns td { padding: 14px 18px; text-align: left; border-top: 1px solid var(--line); vertical-align: top; color: var(--ink-2); }
+  .concerns thead th { border-top: 0; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+  .concerns tbody th { color: var(--plum); font-weight: 650; }
+  .safety { background: var(--surface); border: 1.5px solid var(--midnight); border-left: 8px solid var(--violet); padding: clamp(24px, 4vw, 44px); }
+  .safety h2 { margin-top: 10px; }
+  .safety ul { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; color: var(--ink-2); }
+  @media (max-width: 760px) { .block-head, .routine { grid-template-columns: 1fr; } }
+</style>

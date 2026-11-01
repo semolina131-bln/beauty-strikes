@@ -1,0 +1,60 @@
+[
+  {
+    "id": "korean-skincare",
+    "title": "Korean Skincare",
+    "kicker": "K-Beauty, decoded",
+    "metaTitle": "Korean Skincare: Serums, Cleansers, SPF & Masks — Explained",
+    "description": "Korean skincare without the 10-step myth. What each product type actually does, how to read the ingredient list, and how to build a short routine that fits your skin.",
+    "intro": "Korean skincare is known for gentle textures, smart sunscreens and well-formulated basics. You don't need ten steps. You need to know what each step is for — and which ones you can skip.",
+    "accent": "violet",
+    "sections": [
+      { "id": "cleansers", "title": "Cleansers", "text": "Oil cleansers dissolve sunscreen and makeup; a gentle low-pH water cleanser follows. Most people only need the second step in the morning." },
+      { "id": "serums", "title": "Serums & Essences", "text": "Lightweight layers built around one or two actives — niacinamide, hyaluronic acid, centella, rice or heartleaf extracts. Pick by goal, not by hype." },
+      { "id": "moisturizers", "title": "Moisturizers", "text": "Gel creams for oily skin, barrier creams with ceramides for dry or sensitive skin. Texture matters as much as the ingredient list." },
+      { "id": "spf", "title": "Sunscreen", "text": "Korean sunscreens are prized for light, non-greasy textures. Note: many are formulated for other markets — check that the product sold in the US carries US-compliant labeling." },
+      { "id": "masks", "title": "Masks", "text": "Sheet masks and wash-off masks are an extra, not a foundation. Useful for hydration; rarely essential." }
+    ]
+  },
+  {
+    "id": "skincare-routines",
+    "title": "Skincare Routines & Treatments",
+    "kicker": "Routines that make sense",
+    "metaTitle": "Skincare Routines, Ingredients & Skin Concerns — Evidence-Conscious Guides",
+    "description": "Simple, evidence-conscious skincare routines and ingredient explainers. Learn what niacinamide, retinoids, acids and SPF actually do — and what they can't.",
+    "intro": "Good routines are boring on purpose: cleanse, treat, moisturize, protect. Here we explain the ingredients behind each step and match product types to common skin concerns — without promising miracles.",
+    "accent": "lavender",
+    "sections": [
+      { "id": "routines", "title": "Routine Guides", "text": "Morning and evening routines for beginners and for people simplifying an overgrown shelf." },
+      { "id": "ingredients", "title": "Ingredient Explainers", "text": "What an ingredient does, what the research supports, typical concentrations and what to avoid combining." },
+      { "id": "concerns", "title": "Skin Concerns", "text": "Dryness, oiliness, dullness, uneven tone, sensitivity. Which product categories are worth considering — and when to see a dermatologist instead." }
+    ]
+  },
+  {
+    "id": "haircare-scalp",
+    "title": "Haircare & Scalp Care",
+    "kicker": "Start at the roots",
+    "metaTitle": "Haircare & Scalp Care: Oils, Scalp Treatments & Serums",
+    "description": "Hair oils, scalp treatments and hair serums compared clearly. What each product type does and how to use it without weighing your hair down.",
+    "intro": "Scalp care is skincare that happens to have hair on it. Below: hair oils, scalp serums and treatments, sorted by what they're for.",
+    "accent": "coral",
+    "sections": [
+      { "id": "hair-oils", "title": "Hair Oils", "text": "Lightweight oils smooth lengths and reduce friction. Apply to mid-lengths and ends, not the scalp, unless the product is made for it." },
+      { "id": "scalp-treatments", "title": "Scalp Treatments", "text": "Exfoliating and soothing scalp products for buildup, flakes or oiliness. Persistent itching or hair loss deserves a doctor, not a serum." },
+      { "id": "hair-serums", "title": "Hair Serums", "text": "Leave-in serums for frizz, shine and heat protection." }
+    ]
+  },
+  {
+    "id": "beauty-tools",
+    "title": "Beauty Tools & Devices",
+    "kicker": "Tools, minus the gimmicks",
+    "metaTitle": "Beauty Tools & Devices: LED Masks, Facial Devices & Scalp Massagers",
+    "description": "LED masks, facial devices, massage tools and scalp massagers — how they work, what the evidence says, and the safety points to check before you buy.",
+    "intro": "Devices can be useful additions — or expensive drawer clutter. We explain how each tool works, what realistic results look like, and the safety questions to ask first.",
+    "accent": "lime",
+    "sections": [
+      { "id": "led", "title": "LED Masks", "text": "Light therapy at home. Check wavelengths, eye protection and regulatory clearance before buying." },
+      { "id": "facial-devices", "title": "Facial Devices", "text": "Microcurrent and other facial devices. Results are usually subtle and depend on consistent use." },
+      { "id": "massage-tools", "title": "Massage Tools", "text": "Gua sha, rollers and scalp massagers. Pleasant, low-risk, and best judged as a ritual rather than a treatment." }
+    ]
+  }
+]

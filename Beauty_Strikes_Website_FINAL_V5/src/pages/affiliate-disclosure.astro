@@ -1,0 +1,38 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { AFFILIATE } from '../config';
+---
+<PageLayout
+  title="Affiliate Disclosure"
+  description="How Beauty Strikes uses affiliate links, how they are labeled, and our Amazon Associates disclosure."
+  eyebrow="Transparency"
+  heading="Affiliate Disclosure"
+  updated="November 1, 2026"
+>
+  {AFFILIATE.amazonAssociate ? (
+    <blockquote><p><strong>{AFFILIATE.amazonStatement}</strong></p></blockquote>
+  ) : (
+    <p class="notice"><strong>Status: affiliate links are not active yet.</strong> Beauty Strikes currently contains no affiliate links. This page describes how links will be handled once we participate in an affiliate program.</p>
+  )}
+
+  <h2>What an affiliate link is</h2>
+  <p>Some links on Beauty Strikes may be affiliate links. If you click one and make a qualifying purchase, Beauty Strikes may earn a commission. The price you pay is not affected.</p>
+
+  <h2>How we label affiliate links</h2>
+  <ul>
+    <li>Every affiliate button is labeled <strong>“{AFFILIATE.linkLabel}”</strong> directly next to the link.</li>
+    <li>Pages that contain product recommendations show a disclosure notice near the products, before the first link.</li>
+    <li>Affiliate links open in a new tab and are marked for search engines as sponsored links.</li>
+  </ul>
+
+  <h2>Amazon Associates</h2>
+  <p>Beauty Strikes {AFFILIATE.amazonAssociate ? 'is a participant' : 'intends to participate'} in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com.</p>
+  {AFFILIATE.amazonAssociate && <p><strong>{AFFILIATE.amazonStatement}</strong></p>}
+  <p>Beauty Strikes is independent. We are not affiliated with, endorsed by or sponsored by Amazon. Amazon and the Amazon logo are trademarks of Amazon.com, Inc. or its affiliates.</p>
+
+  <h2>Prices, availability and reviews</h2>
+  <p>We do not show prices, stock levels, star ratings or customer reviews. These change frequently and are displayed on the retailer’s website at the time of purchase.</p>
+
+  <h2>Editorial independence</h2>
+  <p>We aim to evaluate products based on usefulness and relevant evidence, not commission rates. We note limitations as well as strengths. See our <a href="/about/">editorial standards</a>.</p>
+</PageLayout>

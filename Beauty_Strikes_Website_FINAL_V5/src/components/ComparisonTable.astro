@@ -1,0 +1,44 @@
+---
+/** Side-by-side comparison of products from the product data. No prices or ratings by design. */
+import AffiliateButton from './AffiliateButton.astro';
+import type { Product } from '../lib/content';
+interface Props { products: Product[]; caption: string }
+const { products, caption } = Astro.props;
+---
+{products.length > 1 && (
+  <div class="cmp-wrap" role="region" aria-label={caption} tabindex="0">
+    <table class="cmp">
+      <caption>{caption}</caption>
+      <thead>
+        <tr>
+          <th scope="col">Product</th>
+          <th scope="col">Key features</th>
+          <th scope="col">Worth knowing</th>
+          <th scope="col"><span class="visually-hidden">Link</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {products.map((p) => (
+          <tr>
+            <th scope="row"><a href={`/finds/${p.id}/`}><span class="b">{p.data.brand}</span>{p.data.name}</a>
+              {p.data.status === 'placeholder' && <span class="badge badge-placeholder">Placeholder</span>}</th>
+            <td><ul>{p.data.features.slice(0, 3).map((f) => <li>{f}</li>)}</ul></td>
+            <td><ul>{p.data.limitations.slice(0, 2).map((f) => <li>{f}</li>)}</ul></td>
+            <td><AffiliateButton product={p} /></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
+<style>
+  .cmp-wrap { position: relative; overflow-x: auto; border: 1px solid var(--midnight); background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: .9rem; }
+  caption { text-align: left; padding: 18px 20px 10px; font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; color: var(--midnight); }
+  th, td { padding: 14px 20px; text-align: left; vertical-align: top; border-top: 1px solid var(--line); }
+  thead th { font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: #fff; background: var(--midnight); font-weight: 700; border-top: 0; }
+  tbody th { font-weight: 600; }
+  tbody th a { color: var(--plum); text-decoration: none; display: block; margin-bottom: 6px; }
+  .b { display: block; font-size: .78rem; color: var(--ink-3); font-weight: 600; }
+  ul { margin: 0; padding-left: 1.1em; color: var(--ink-2); }
+</style>

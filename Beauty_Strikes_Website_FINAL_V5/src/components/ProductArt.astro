@@ -1,0 +1,52 @@
+---
+/**
+ * Product visual. Uses your approved image when `image.src` is set
+ * (put files in /public/images/products/). Otherwise shows a clearly
+ * labeled placeholder. Never substitute Amazon product photos without permission.
+ */
+interface Props { category: string; subcategory?: string; image?: { src: string; alt: string }; large?: boolean }
+const { category, subcategory = '', image, large = false } = Astro.props;
+const isTool = category === 'beauty-tools';
+const isOil = subcategory.includes('oil');
+const isHair = category === 'haircare-scalp';
+---
+{image?.src ? (
+  <img class="art photo" src={image.src} alt={image.alt} loading="lazy" width="800" height="800" />
+) : (
+  <div class:list={['art', { large, hair: isHair, tool: isTool }]} aria-hidden="true">
+    <span class="slab"></span>
+    <svg viewBox="0 0 200 200">
+      {isTool ? (
+        <g fill="#fff" stroke="#170b2e" stroke-width="2.2">
+          <path d="M70 40 L130 40 L138 52 L138 128 L130 140 L70 140 L62 128 L62 52 Z" />
+          <rect x="90" y="140" width="20" height="38" />
+          <path d="M84 76 L116 76 L116 104 L84 104 Z" fill="#b59aff" />
+        </g>
+      ) : isOil ? (
+        <g fill="#fff" stroke="#170b2e" stroke-width="2.2">
+          <rect x="90" y="26" width="20" height="30" fill="#170b2e" />
+          <path d="M78 56 L122 56 L134 76 L134 176 L66 176 L66 76 Z" />
+          <path d="M66 120 L134 104 L134 128 L66 144 Z" fill="#b59aff" stroke="none" />
+        </g>
+      ) : (
+        <g fill="#fff" stroke="#170b2e" stroke-width="2.2">
+          <rect x="84" y="24" width="32" height="26" fill="#170b2e" />
+          <path d="M70 50 L130 50 L130 178 L70 178 Z" />
+          <path d="M70 118 L130 96 L130 122 L70 144 Z" fill="#b59aff" stroke="none" />
+        </g>
+      )}
+    </svg>
+    <span class="tag">Image placeholder</span>
+  </div>
+)}
+
+<style>
+  .art { position: relative; aspect-ratio: 1; background: var(--offwhite); display: grid; place-items: center; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .slab { position: absolute; inset: 0; background: var(--lavender-soft); clip-path: polygon(0 62%, 100% 30%, 100% 100%, 0 100%); }
+  .hair .slab { background: #f3eaf9; }
+  .tool .slab { background: var(--wash-2); }
+  .art svg { position: relative; width: 56%; }
+  .large svg { width: 50%; }
+  .photo { object-fit: cover; width: 100%; aspect-ratio: 1; }
+  .tag { position: absolute; left: 12px; top: 12px; font-size: .6rem; font-weight: 750; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); border: 1px dashed var(--line-strong); padding: 10px 15px; background: rgba(255,255,255,.7); }
+</style>

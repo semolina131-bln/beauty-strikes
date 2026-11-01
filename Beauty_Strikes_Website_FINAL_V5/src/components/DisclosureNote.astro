@@ -1,0 +1,16 @@
+---
+/** Conspicuous disclosure placed near product recommendations. */
+import { AFFILIATE } from '../config';
+---
+<aside class="disc" aria-label="Affiliate disclosure">
+  {AFFILIATE.amazonAssociate ? (
+    <p><strong>{AFFILIATE.amazonStatement}</strong> Buttons marked “{AFFILIATE.linkLabel}” are affiliate links. Prices and availability are shown on Amazon, not here. <a href="/affiliate-disclosure/">Full disclosure</a></p>
+  ) : (
+    <p><strong>No affiliate links are active yet.</strong> When they are, each one will be labeled “{AFFILIATE.linkLabel}”. Products marked “Placeholder” are sample slots, not recommendations. <a href="/affiliate-disclosure/">How we handle this</a></p>
+  )}
+</aside>
+<style>
+  .disc { display: flex; gap: 14px; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--violet); padding: 16px 20px; font-size: .9rem; color: var(--ink-2); }
+  .disc p { margin: 0; }
+  .disc strong { color: var(--midnight); }
+</style>
