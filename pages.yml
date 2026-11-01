@@ -1,0 +1,138 @@
+# Beauty Strikes – Pages CMS configuration
+# This file belongs in the GitHub repository root, beside the project folder.
+media:
+  input: Beauty_Strikes_Website_FINAL_V5/public/images/uploads
+  output: /images/uploads
+content:
+  - name: products
+    label: Products (15 slots)
+    type: file
+    path: Beauty_Strikes_Website_FINAL_V5/src/data/products.json
+    format: json
+    list: true
+    fields:
+      - name: id
+        label: Product ID / URL slug
+        type: string
+        required: true
+        description: Keep unique; changing an ID may break related links.
+      - name: name
+        label: Product name
+        type: string
+        required: true
+      - name: brand
+        type: string
+        required: true
+      - name: category
+        type: string
+        required: true
+      - name: subcategory
+        type: string
+      - name: summary
+        type: text
+      - name: features
+        type: string
+        list: true
+      - name: pros
+        type: string
+        list: true
+      - name: limitations
+        type: string
+        list: true
+      - name: image
+        type: object
+        fields:
+          - name: src
+            label: Image path
+            type: string
+            description: Use legally permitted images only; e.g. /images/uploads/example.jpg
+          - name: alt
+            type: string
+          - name: credit
+            type: string
+      - name: amazonUrl
+        label: Amazon product URL
+        type: string
+      - name: affiliateUrl
+        label: Amazon Associates URL
+        type: string
+        description: Do not add active affiliate links until the program permits them.
+      - name: status
+        label: Status (placeholder / draft / live)
+        type: string
+        description: Use 'placeholder' or 'draft' until verified.
+      - name: featured
+        type: boolean
+      - name: lastReviewed
+        label: Last reviewed (YYYY-MM-DD)
+        type: string
+  - name: journal
+    label: Journal articles
+    type: collection
+    path: Beauty_Strikes_Website_FINAL_V5/src/content/journal
+    format: yaml-frontmatter
+    view:
+      fields: [title, category, draft, pubDate]
+      primary: title
+    fields:
+      - name: title
+        type: string
+        required: true
+      - name: description
+        type: text
+        required: true
+      - name: category
+        type: string
+      - name: template
+        type: string
+      - name: pubDate
+        label: Publication date
+        type: date
+      - name: draft
+        type: boolean
+        description: Keep enabled until article facts and sources are verified.
+      - name: relatedProducts
+        type: string
+        list: true
+      - name: tags
+        type: string
+        list: true
+      - name: body
+        label: Article body
+        type: rich-text
+  - name: categories
+    label: Category pages (4)
+    type: file
+    path: Beauty_Strikes_Website_FINAL_V5/src/data/categories.json
+    format: json
+    list: true
+    fields:
+      - name: id
+        type: string
+        required: true
+        description: Keep existing IDs to preserve page URLs.
+      - name: title
+        type: string
+      - name: kicker
+        type: string
+      - name: metaTitle
+        type: string
+      - name: description
+        type: text
+      - name: intro
+        type: text
+      - name: accent
+        type: string
+      - name: sections
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: '{title}'
+        fields:
+          - name: id
+            type: string
+          - name: title
+            type: string
+          - name: text
+            type: text
